@@ -1,0 +1,43 @@
+version: '3.8'
+
+volumes:
+  pg_data:
+  static:
+
+services:
+  postgres:
+    image: postgres:14
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+  backend:
+    build: ./backend/
+    restart: unless-stopped
+    env_file: .env
+    depends_on:
+      - postgres
+    volumes:
+      - static:/backend_static
+  redis:
+    image: redis:latest
+    restart: unless-stopped
+  celery:
+    build: ./backend/
+    restart: unless-stopped
+    command: celery --app=notification_service worker --loglevel=info
+    env_file: .env
+    volumes:
+      - static:/backend_static
+    depends_on:
+      - postgres
+      - backend
+      - redis
+  nginx:
+    build: ./nginx/
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - 8000:80
+    volumes:
+      - static:/static
