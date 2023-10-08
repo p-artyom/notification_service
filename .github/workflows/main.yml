@@ -39,7 +39,7 @@ jobs:
           POSTGRES_DB: postgres
           POSTGRES_USER: postgres_user
           POSTGRES_PASSWORD: postgres_password
-          DB_NAME: localhost
+          DB_HOST: localhost
           DB_PORT: 5432
           SECRET_KEY: some-test-key
           DEBUG: False
