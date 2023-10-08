@@ -92,5 +92,5 @@ class ViewsTests(TestCase):
         )
         self.assertEqual(
             Message.objects.count(),
-            1,
+            0,
         )

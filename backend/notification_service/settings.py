@@ -10,10 +10,10 @@ DOTENV_PATH = BASE_DIR.parent / '.env'
 if os.path.exists(DOTENV_PATH):
     load_dotenv(DOTENV_PATH)
 
-CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL', 'redis://redis:6379')
+CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL', 'redis://localhost:6379')
 
 CELERY_RESULT_BACKEND = os.getenv(
-    'CELERY_RESULT_BACKEND', 'redis://redis:6379'
+    'CELERY_RESULT_BACKEND', 'redis://localhost:6379'
 )
 
 SECRET_KEY = os.getenv('SECRET_KEY', 'some-test-key-not-good-for-prod')
