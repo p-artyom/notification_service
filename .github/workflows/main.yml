@@ -37,10 +37,7 @@ jobs:
           pip install flake8==6.0.0
           pip install -r ./backend/requirements.txt
 
-      - name: Start Celery 
-        env:
-          CELERY_BROKER_URL: redis://localhost:6379
-          CELERY_RESULT_BACKEND: redis://localhost:6379
+      - name: Start Celery
         run: |
           cd backend/
           celery --app=notification_service worker --loglevel=info
@@ -55,8 +52,6 @@ jobs:
           SECRET_KEY: some-test-key
           DEBUG: False
           ALLOWED_HOSTS: 127.0.0.1 localhost
-          CELERY_BROKER_URL: redis://localhost:6379
-          CELERY_RESULT_BACKEND: redis://localhost:6379
           URL: ${{ secrets.URL }}
           TOKEN: ${{ secrets.TOKEN }}
         run: |
