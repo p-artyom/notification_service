@@ -39,10 +39,12 @@ jobs:
           pip install flake8==6.0.0
           pip install -r ./backend/requirements.txt
 
-      # - name: Start Celery
-      #   run: |
-      #     cd backend/
-      #     celery --app=notification_service worker --loglevel=info
+      - name: Start Celery
+        run: |
+          mkdir -p /var/run/celery
+          mkdir -p /var/log/celery
+          cd backend/
+          celery multi start w1 --app=notification_service worker --loglevel=info --pidfile=/var/run/celery/%n.pid --logfile=/var/log/celery/%n%I.log
 
       - name: Test with flake8 and Django tests
         env:
@@ -60,5 +62,4 @@ jobs:
           python -m flake8 backend/
           cd backend/
           python manage.py migrate
-          python manage.py celeryd_detach
           python manage.py test
