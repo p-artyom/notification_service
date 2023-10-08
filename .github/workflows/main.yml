@@ -41,10 +41,8 @@ jobs:
 
       - name: Start Celery
         run: |
-          mkdir -p /var/run/celery
-          mkdir -p /var/log/celery
           cd backend/
-          celery multi start w1 --app=notification_service worker --loglevel=info --pidfile=/var/run/celery/%n.pid --logfile=/var/log/celery/%n%I.log
+          celery --app=notification_service worker --loglevel=info --detach
 
       - name: Test with flake8 and Django tests
         env:
