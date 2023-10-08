@@ -39,6 +39,11 @@ jobs:
           pip install flake8==6.0.0
           pip install -r ./backend/requirements.txt
 
+      - name: Start Celery
+        run: |
+          cd backend/
+          celery --app=notification_service worker --loglevel=info
+
       - name: Test with flake8 and Django tests
         env:
           POSTGRES_DB: postgres
